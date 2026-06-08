@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Collect — Panel Financiero 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#060d1a; --s1:#0c1525; --s2:#111e33; --s3:#162340;
+  --bdr:#1c2e4a; --bdr2:#243a5e;
+  --acc:#00e5c3; --acc2:#4d9fff; --acc3:#a78bfa;
+  --warn:#fbbf24; --danger:#f87171; --muted:#5a7a9a; --text:#cde0f5;
+  --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;min-height:100vh;}
+
+/* HEADER */
+header{padding:18px 32px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(90deg,#060d1a 0%,#0a1628 100%);position:sticky;top:0;z-index:200;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-mark{width:38px;height:38px;background:var(--acc);border-radius:6px;display:grid;place-items:center;
+  font-weight:700;font-size:14px;color:#000;font-family:var(--mono);}
+.logo-name{font-size:15px;font-weight:600;letter-spacing:-.3px;}
+.logo-sub{font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:2px;}
+.badge{background:var(--s2);border:1px solid var(--bdr2);padding:4px 12px;border-radius:20px;
+  font-size:10px;color:var(--muted);font-family:var(--mono);}
+
+/* NAV */
+nav{display:flex;gap:0;padding:0 32px;background:var(--s1);border-bottom:1px solid var(--bdr);overflow-x:auto;}
+nav button{background:none;border:none;color:var(--muted);padding:13px 20px;font-family:var(--sans);
+  font-size:12px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .2s;white-space:nowrap;letter-spacing:.2px;}
+nav button:hover{color:var(--text);}
+nav button.active{color:var(--acc);border-bottom-color:var(--acc);}
+
+/* LAYOUT */
+main{padding:24px 32px;max-width:1500px;}
+.tab{display:none;} .tab.active{display:block;}
+.sec{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+  margin:28px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--bdr);}
+.sec:first-child{margin-top:0;}
+
+/* MES FILTER */
+.mes-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+.mes-btn{background:var(--s2);border:1px solid var(--bdr);color:var(--muted);
+  padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;
+  transition:all .2s;font-family:var(--mono);}
+.mes-btn:hover{border-color:var(--acc2);color:var(--text);}
+.mes-btn.active{background:var(--acc);border-color:var(--acc);color:#000;font-weight:600;}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:24px;}
+.kpi{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:16px 18px;
+  position:relative;overflow:hidden;}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.kpi.g::after{background:var(--acc);}
+.kpi.b::after{background:var(--acc2);}
+.kpi.y::after{background:var(--warn);}
+.kpi.r::after{background:var(--danger);}
+.kpi.p::after{background:var(--acc3);}
+.kpi-lbl{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;}
+.kpi-val{font-size:24px;font-weight:700;font-family:var(--mono);letter-spacing:-1px;line-height:1;}
+.kpi-sub{font-size:10px;color:var(--muted);margin-top:6px;}
+
+/* TABLA */
+.tw{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;overflow:auto;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;min-width:600px;}
+thead th{background:var(--s2);padding:9px 14px;text-align:right;font-size:10px;font-weight:600;
+  letter-spacing:.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bdr);
+  white-space:nowrap;}
+thead th:first-child{text-align:left;}
+tbody tr{border-bottom:1px solid rgba(28,46,74,.5);transition:background .1s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,.02);}
+td{padding:9px 14px;text-align:right;font-family:var(--mono);font-size:12px;white-space:nowrap;}
+td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size:12px;}
+.rs td{background:var(--s2);font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);padding:5px 14px;}
+.rt td{font-weight:700;background:rgba(0,229,195,.04);border-top:1px solid var(--bdr2);}
+.pos{color:var(--acc);}
+.neg{color:var(--danger);}
+.warn{color:var(--warn);}
+.dim{color:var(--muted);}
+.niv{display:inline-block;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;font-family:var(--sans);}
+.n6{background:rgba(0,229,195,.12);color:var(--acc);}
+.n5{background:rgba(77,159,255,.12);color:var(--acc2);}
+.n4{background:rgba(167,139,250,.12);color:var(--acc3);}
+.n3,.n2,.n1{background:rgba(248,113,113,.12);color:var(--danger);}
+
+/* CHARTS */
+.chart-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.chart-1{margin-bottom:20px;}
+.cc{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:20px;}
+.ct{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+.br{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.br-lbl{width:80px;font-size:10px;color:var(--muted);text-align:right;font-family:var(--mono);flex-shrink:0;}
+.br-track{flex:1;background:var(--s2);border-radius:3px;height:22px;overflow:hidden;}
+.br-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;
+  transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.br-fill span{font-size:10px;font-weight:600;color:rgba(0,0,0,.85);font-family:var(--mono);white-space:nowrap;}
+.br-val{width:110px;font-size:11px;font-family:var(--mono);text-align:right;}
+
+/* ESCENARIOS */
+.esc-controls{background:var(--s1);border:1px solid var(--bdr2);border-radius:8px;padding:20px;margin-bottom:20px;}
+.esc-controls-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--acc2);margin-bottom:16px;}
+.esc-grid-inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.esc-group{display:flex;flex-direction:column;gap:8px;}
+.esc-group-title{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.esc-input-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.esc-input-lbl{font-size:11px;color:var(--text);}
+.esc-input{background:var(--s2);border:1px solid var(--bdr2);color:var(--acc);
+  font-family:var(--mono);font-size:12px;font-weight:600;padding:4px 8px;
+  border-radius:4px;width:80px;text-align:right;}
+.esc-input:focus{outline:none;border-color:var(--acc);}
+.esc-btn{background:var(--acc);color:#000;border:none;padding:8px 20px;border-radius:6px;
+  font-weight:700;font-size:12px;cursor:pointer;margin-top:12px;font-family:var(--sans);}
+.esc-btn:hover{opacity:.9;}
+.esc-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:20px;}
+.esc-card{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:16px;transition:all .2s;}
+.esc-card.base{border-color:var(--acc);}
+.esc-card:hover{border-color:var(--acc2);transform:translateY(-2px);}
+.esc-name{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;}
+.esc-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(28,46,74,.6);}
+.esc-row:last-child{border-bottom:none;}
+.esc-k{font-size:10px;color:var(--muted);}
+.esc-v{font-size:11px;font-family:var(--mono);font-weight:600;}
+.tag-si{background:rgba(0,229,195,.12);color:var(--acc);padding:1px 7px;border-radius:3px;font-size:9px;font-weight:700;}
+.tag-no{background:rgba(248,113,113,.12);color:var(--danger);padding:1px 7px;border-radius:3px;font-size:9px;font-weight:700;}
+
+/* HONORARIOS */
+.hon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;}
+.hon-card{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;}
+.hon-hdr{background:var(--s2);padding:10px 16px;font-size:10px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;border-bottom:1px solid var(--bdr);}
+.hon-row{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;
+  border-bottom:1px solid rgba(28,46,74,.4);font-size:11px;}
+.hon-row:last-child{border-bottom:none;}
+.hon-seg{color:var(--muted);}
+.hon-pcts{display:flex;gap:20px;}
+.pct{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.pct-val{font-family:var(--mono);font-weight:700;font-size:12px;}
+.pct-lbl{font-size:8px;color:var(--muted);letter-spacing:.5px;}
+.had-color{color:var(--acc2);}
+.hac-color{color:var(--acc);}
+
+@media(max-width:768px){
+  main{padding:14px 16px;}
+  header{padding:14px 16px;}
+  nav{padding:0 10px;}
+  .chart-2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">GC</div>
+    <div>
+      <div class="logo-name">General Collect</div>
+      <div class="logo-sub">Panel Financiero 2026 — Datos reales ENE–MAY</div>
+    </div>
+  </div>
+  <div class="badge" id="badge-mes">Todos los meses</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('resumen',this)">Resumen Ejecutivo</button>
+  <button onclick="showTab('clientes',this)">Rentabilidad por Cliente</button>
+  <button onclick="showTab('escenarios',this)">Simulador de Escenarios</button>
+  <button onclick="showTab('honorarios',this)">Honorarios Contractuales</button>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 1 — RESUMEN EJECUTIVO
+═══════════════════════════════════════════════════════ -->
+<div id="tab-resumen" class="tab active">
+
+  <div class="sec">Filtrar por mes</div>
+  <div class="mes-filter">
+    <button class="mes-btn active" onclick="filtrarMes('todos',this)">Acumulado</button>
+    <button class="mes-btn" onclick="filtrarMes('ene',this)">ENE</button>
+    <button class="mes-btn" onclick="filtrarMes('feb',this)">FEB</button>
+    <button class="mes-btn" onclick="filtrarMes('mar',this)">MAR</button>
+    <button class="mes-btn" onclick="filtrarMes('abr',this)">ABR</button>
+    <button class="mes-btn" onclick="filtrarMes('may',this)">MAY</button>
+    <button class="mes-btn" onclick="filtrarMes('jun',this)">JUN ⚠</button>
+  </div>
+
+  <div class="sec">KPIs principales</div>
+  <div class="kpi-grid" id="kpi-area"></div>
+
+  <div class="sec">P&L Completo</div>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:240px">Concepto</th>
+          <th class="col-todos col-ene">ENE</th>
+          <th class="col-todos col-feb">FEB</th>
+          <th class="col-todos col-mar">MAR</th>
+          <th class="col-todos col-abr">ABR</th>
+          <th class="col-todos col-may">MAY</th>
+          <th class="col-todos col-jun">JUN*</th>
+          <th class="col-todos" style="background:#0a1628;color:var(--acc2)">TOTAL</th>
+        </tr>
+      </thead>
+      <tbody id="pl-body"></tbody>
+    </table>
+  </div>
+  <p style="font-size:10px;color:var(--muted);margin-bottom:24px">* JUN: venta no cargada — solo costos parciales registrados. ENE: costos totales no cargados en el cierre.</p>
+
+  <div class="sec">Composición del costo laboral</div>
+  <div class="chart-2">
+    <div class="cc">
+      <div class="ct">Costo total laboral por mes</div>
+      <div id="chart-masa"></div>
+    </div>
+    <div class="cc">
+      <div class="ct">Sueldos vs Incentivos ENE–ABR</div>
+      <div id="chart-comp"></div>
+    </div>
+  </div>
+
+  <div class="sec">Evolución facturación</div>
+  <div class="chart-2">
+    <div class="cc">
+      <div class="ct">Facturación bruta por mes ($)</div>
+      <div id="chart-fac"></div>
+    </div>
+    <div class="cc">
+      <div class="ct">Capital recuperado por mes ($)</div>
+      <div id="chart-cap"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 2 — RENTABILIDAD POR CLIENTE
+═══════════════════════════════════════════════════════ -->
+<div id="tab-clientes" class="tab">
+  <div class="sec">Resultados por cliente — ENE a ABR (valores exactos en $)</div>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:200px">Cliente</th>
+          <th colspan="4" style="text-align:center;border-right:1px solid var(--bdr)">ENERO</th>
+          <th colspan="4" style="text-align:center;border-right:1px solid var(--bdr)">FEBRERO</th>
+          <th colspan="4" style="text-align:center;border-right:1px solid var(--bdr)">MARZO</th>
+          <th colspan="4" style="text-align:center">ABRIL</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Fac. Total</th><th>Costo N6</th><th>Margen</th><th style="border-right:1px solid var(--bdr)">Nivel</th>
+          <th>Fac. Total</th><th>Costo N6</th><th>Margen</th><th style="border-right:1px solid var(--bdr)">Nivel</th>
+          <th>Fac. Total</th><th>Costo N6</th><th>Margen</th><th style="border-right:1px solid var(--bdr)">Nivel</th>
+          <th>Fac. Total</th><th>Costo N6</th><th>Margen</th><th>Nivel</th>
+        </tr>
+      </thead>
+      <tbody id="cli-body"></tbody>
+    </table>
+  </div>
+
+  <div class="sec">Headcount y costo por operador</div>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>ENE ops</th><th>FEB ops</th><th>MAR ops</th><th>ABR ops</th><th>MAY ops</th>
+          <th>Costo/op ENE</th><th>Costo/op ABR</th><th>Variación</th>
+        </tr>
+      </thead>
+      <tbody id="hc-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 3 — SIMULADOR DE ESCENARIOS
+═══════════════════════════════════════════════════════ -->
+<div id="tab-escenarios" class="tab">
+
+  <div class="sec">Parámetros del simulador — modificar y calcular</div>
+  <div class="esc-controls">
+    <div class="esc-controls-title">⚙ Ajustar variables para simular</div>
+    <div class="esc-grid-inputs">
+
+      <div class="esc-group">
+        <div class="esc-group-title">Honorarios % (sobre capital)</div>
+        <div class="esc-input-row"><span class="esc-input-lbl">ICBC HAD %</span><input class="esc-input" id="p_icbc_had" value="19"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">ICBC HAC %</span><input class="esc-input" id="p_icbc_hac" value="17"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">BSR HAD %</span><input class="esc-input" id="p_bsr_had" value="10"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">BSR HAC %</span><input class="esc-input" id="p_bsr_hac" value="15"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Consumer HAD %</span><input class="esc-input" id="p_cons_had" value="10"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Consumer HAC %</span><input class="esc-input" id="p_cons_hac" value="10"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Supervielle HAD %</span><input class="esc-input" id="p_sup_had" value="15"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Supervielle HAC %</span><input class="esc-input" id="p_sup_hac" value="18"></div>
+      </div>
+
+      <div class="esc-group">
+        <div class="esc-group-title">Operadores por equipo</div>
+        <div class="esc-input-row"><span class="esc-input-lbl">ICBC Tardía</span><input class="esc-input" id="p_ops_icbc_t" value="21"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">ICBC Temprana</span><input class="esc-input" id="p_ops_icbc_temp" value="35"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">BSR</span><input class="esc-input" id="p_ops_bsr" value="33"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Consumer</span><input class="esc-input" id="p_ops_cons" value="19"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Supervielle</span><input class="esc-input" id="p_ops_sup" value="19"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Naranja</span><input class="esc-input" id="p_ops_nar" value="29"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Ciudad</span><input class="esc-input" id="p_ops_ciu" value="8"></div>
+      </div>
+
+      <div class="esc-group">
+        <div class="esc-group-title">Capital recuperado proyectado ($)</div>
+        <div class="esc-input-row"><span class="esc-input-lbl">ICBC Tardía</span><input class="esc-input" id="p_cap_icbc_t" value="1326000000"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">ICBC Temprana</span><input class="esc-input" id="p_cap_icbc_temp" value="445000000"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">BSR</span><input class="esc-input" id="p_cap_bsr" value="1184666667"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Consumer</span><input class="esc-input" id="p_cap_cons" value="776000000"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Supervielle</span><input class="esc-input" id="p_cap_sup" value="117000000"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Naranja</span><input class="esc-input" id="p_cap_nar" value="106000000"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Costo/op mes ($)</span><input class="esc-input" id="p_costo_op" value="2450000"></div>
+      </div>
+
+      <div class="esc-group">
+        <div class="esc-group-title">Estructura fija</div>
+        <div class="esc-input-row"><span class="esc-input-lbl">Costo fijo ($)</span><input class="esc-input" id="p_costo_fijo" value="317697125"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">PE Normal capital ($)</span><input class="esc-input" id="p_pe_normal" value="2545000000"></div>
+        <div class="esc-input-row"><span class="esc-input-lbl">PE SACC capital ($)</span><input class="esc-input" id="p_pe_sacc" value="3500000000"></div>
+      </div>
+
+    </div>
+    <button class="esc-btn" onclick="calcularEscenarios()">▶ Calcular escenarios</button>
+  </div>
+
+  <div class="sec">Resultados de escenarios</div>
+  <div class="esc-results" id="esc-results"></div>
+
+  <div class="sec">Comparativo de escenarios</div>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>Escenario</th>
+          <th>Facturación</th>
+          <th>Costo total</th>
+          <th>Resultado</th>
+          <th>EBITDA %</th>
+          <th>vs Base</th>
+          <th>PE Normal</th>
+          <th>PE SACC</th>
+        </tr>
+      </thead>
+      <tbody id="esc-tabla"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB 4 — HONORARIOS
+═══════════════════════════════════════════════════════ -->
+<div id="tab-honorarios" class="tab">
+  <p style="font-size:11px;color:var(--muted);margin-bottom:20px">
+    <span style="color:var(--acc2);font-weight:600">HAD</span> = honorario que GC cobra al deudor &nbsp;|&nbsp;
+    <span style="color:var(--acc);font-weight:600">HAC</span> = % que el banco cliente paga a GC sobre lo recuperado &nbsp;|&nbsp;
+    Los segmentos <strong>no se suman ni promedian</strong> — cada uno aplica de forma independiente según el ciclo del deudor.
+  </p>
+  <div class="hon-grid">
+
+    <div class="hon-card">
+      <div class="hon-hdr">🏦 ICBC — foco ciclos 0, 1, 2, 3</div>
+      <div class="hon-row">
+        <span class="hon-seg">Ciclo 0 (al día / ingreso)</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">19%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">17%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row">
+        <span class="hon-seg">Ciclo 1 (1er mes de mora)</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">19%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">17%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row">
+        <span class="hon-seg">Ciclo 2 (2do mes de mora)</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">19%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">17%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row">
+        <span class="hon-seg">Ciclo 3 (3er mes de mora)</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">19%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">17%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row" style="background:rgba(248,113,113,.04)">
+        <span class="hon-seg" style="color:var(--muted);font-size:10px">90-120 días sin HAD</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">1.2%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">17%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row" style="background:rgba(248,113,113,.04)">
+        <span class="hon-seg" style="color:var(--muted);font-size:10px">Menor 90 días / Judicial</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hon-card">
+      <div class="hon-hdr">🏦 Santander Consumer — segmentos 1 y 2</div>
+      <div class="hon-row" style="background:rgba(0,229,195,.04)">
+        <span class="hon-seg"><strong>Consumer 1</strong> — mora temprana</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">10%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">10%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row" style="background:rgba(77,159,255,.04)">
+        <span class="hon-seg"><strong>Consumer 2</strong> — mora media</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">10%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">15%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row" style="opacity:.5">
+        <span class="hon-seg" style="font-size:10px">Consumer 3</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">20%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row" style="opacity:.5">
+        <span class="hon-seg" style="font-size:10px">Consumer 4</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">25%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row" style="opacity:.5">
+        <span class="hon-seg" style="font-size:10px">Consumer 4.1</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">30%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div style="padding:8px 16px;font-size:9px;color:var(--muted);border-top:1px solid var(--bdr)">
+        ⚠ Cada segmento aplica de forma independiente — no se suman ni promedian entre sí
+      </div>
+    </div>
+
+    <div class="hon-card">
+      <div class="hon-hdr">🏦 BSR (Santander 2ª cartera)</div>
+      <div class="hon-row">
+        <span class="hon-seg">Segunda vuelta S1/S2/S3</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">10%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">15%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row">
+        <span class="hon-seg">Campaña / Pyme</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">20%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row">
+        <span class="hon-seg">Prendas LTV / 1 año / 2 años</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">10%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">20%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hon-card">
+      <div class="hon-hdr">🏦 Supervielle</div>
+      <div class="hon-row">
+        <span class="hon-seg">Segunda vuelta</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">15%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">18%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row">
+        <span class="hon-seg">Prendario</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val had-color">10%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">10%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hon-card">
+      <div class="hon-hdr">🏦 Naranja X</div>
+      <div class="hon-row">
+        <span class="hon-seg">Primera vuelta (CC, RA, RB, RM)</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">15%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row">
+        <span class="hon-seg">Tercera vuelta</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">30%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div style="padding:8px 16px;font-size:9px;color:var(--danger);border-top:1px solid var(--bdr)">
+        ⚠ Sin HAD — ingreso solo vía HAC del banco
+      </div>
+    </div>
+
+    <div class="hon-card">
+      <div class="hon-hdr">🏦 TMF / Adquiridas</div>
+      <div class="hon-row">
+        <span class="hon-seg">TMF</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val hac-color">20%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+      <div class="hon-row">
+        <span class="hon-seg">Adquiridas (carteras compradas)</span>
+        <div class="hon-pcts">
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAD</span></div>
+          <div class="pct"><span class="pct-val" style="color:var(--muted)">0%</span><span class="pct-lbl">HAC</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATOS REALES EXACTOS
+// ═══════════════════════════════════════════════════════
+const D = {
+  meses: ['ENE','FEB','MAR','ABR','MAY','JUN'],
+  capital:   [1841863409, 1978236742, 2463320483, 2545147589, 2342331547, 0],
+  had:       [248256654,  251696822,  335352839,  316547879,  316721732,  0],
+  hac:       [324242747,  344299081,  434529477,  417855089,  417712930,  0],
+  posic:     [146086319,  122438849,  136468060,  135032517,  150465219,  0],
+  tot_bruto: [718585720,  718434753,  906350376,  869435486,  884899882,  0],
+  rrhh_temp: [0,          75134086,   86203026,   80712242,   86545056,   15464396],
+  rrhh_tard: [0,          216457724,  232931581,  236984882,  265279413,  377656186],
+  otros_cos: [0,          0,          0,          0,          0,          267393895],
+  tot_gasto: [0,          291591810,  319134607,  317697125,  351824470,  660514679],
+  resultado: [718585720,  427843,     587215769,  551738361,  533075412,  -470140427],
+  retenciones:[105199670, 65092799,   107266598,  108064617,  69895387,   0],
+  resultado_neto:[613386049,361750143,479949171, 443673743,  463180024,  -470140427],
+  ebitda_pct:[85.36, 50.35, 52.95, 51.03, 52.34, 0],
+  hon_pct:   [31.08, 30.13, 31.25, 28.86, 31.35, 0],
+  // Sueldos vs incentivos (de tabla ANUAL)
+  sueldos:   [109889314, 118119082, 126476269, 129197988, 0, 0],
+  incentivos:[34557609,  50512953,  51730218,  68227921,  0, 0],
+  horas_ext: [9400000,   11900000,  7800000,   0,         0, 0],
+};
+
+const CLIENTES = [
+  // nombre, [total ene,feb,mar,abr], [costo_n6 ene,feb,mar,abr], [ops ene,feb,mar,abr,may], [had ene...], [hac ene...]
+  {n:'ICBC Tardía',
+   tot: [349344923,297386188,389014685,477676907],
+   cos: [31393641, 39859931, 40552912, 45847364],
+   ops: [18,19,19,21,25],
+   had: [163430659,149626767,200229821,252107256],
+   hac: [185914263,147759421,188784863,225569650],
+   niveles:['N6','N6','N6','N6']},
+  {n:'BSR',
+   tot: [107792713,146017625,192984841,177749000],
+   cos: [51258998, 58740951, 59762187, 72045857],
+   ops: [28,28,28,33,38],
+   had: [39416284, 48928912, 67603822, 67518000],
+   hac: [68376429, 97088713, 125381018,110231000],
+   niveles:['N6','N6','N6','N6']},
+  {n:'Santander Consumer',
+   tot: [115894923,121520227,149669071,155385285],
+   cos: [26161367, 31468366, 32015457, 41480948],
+   ops: [15,15,15,19,20],
+   had: [47559726, 51137396, 64860053, 77692642],
+   hac: [68335197, 70382830, 84809018, 77692642],
+   niveles:['N6','N6','N6','N6']},
+  {n:'Naranja X',
+   tot: [24190322, 26363577, 48455528, 31944000],
+   cos: [43602279, 52447278, 53359095, 63313026],
+   ops: [25,25,25,29,24],
+   had: [0,         0,        16091920, 0],
+   hac: [24190322, 26363577, 32363608, 31944000],
+   niveles:['N3','N4','N5','N4']},
+  {n:'Supervielle Tardía',
+   tot: [25821637, 19954285, 21096110, 21096110],
+   cos: [43602279, 52447278, 53359095, 41480948],
+   ops: [17,16,16,19,17],
+   had: [3074608,  2003746,  2659141,  2659141],
+   hac: [3689529,  2704538,  3190969,  3190969],
+   niveles:['N1','N1','N1','N1']},
+  {n:'ICBC Temprana',
+   tot: [96535512, 84833816, 84833816, 84833816],
+   cos: [51258998, 53743724, 48174335, 52256921],
+   ops: [40,32,32,35,35],
+   had: [0,0,0,0],
+   hac: [96535512,84833816,84833816,84833816],
+   niveles:['N6','N6','N6','N6']},
+  {n:'Ciudad Temprana',
+   tot: [7623653,  7623653,  7623653,  13341393],
+   cos: [7688849,  10076948, 9032687,  8958329],
+   ops: [6,6,6,8,8],
+   had: [0,0,0,0],
+   hac: [7623653,7623653,7623653,13341393],
+   niveles:['N4','N2','N2','N5']},
+  {n:'Adquiridas',
+   tot: [4820494,  2256265,  3317593,  3317593],
+   cos: [0,0,0,0],
+   ops: [0,0,0,0,0],
+   had: [0,0,0,0],
+   hac: [4820494,2256265,3317593,3317593],
+   niveles:['N6','N6','N6','N6']},
+];
+
+// ═══════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════
+let mesFiltro = 'todos';
+
+function fmt(n, tipo='$') {
+  if(n===null||n===undefined||isNaN(n)) return '—';
+  if(tipo==='$'){
+    const abs = Math.abs(Math.round(n));
+    const str = abs.toLocaleString('es-AR');
+    return (n<0?'('+str+')':'$ '+str);
+  }
+  if(tipo==='%') return (n*100).toFixed(2)+'%';
+  if(tipo==='pct') return n.toFixed(2)+'%';
+  return Math.round(n).toLocaleString('es-AR');
+}
+
+function colorClass(n){ return n>0?'pos':n<0?'neg':'dim'; }
+
+function nivelBadge(n){
+  const cls = n.toLowerCase().replace(' ','');
+  return `<span class="niv ${cls}">${n}</span>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// NAVEGACIÓN
+// ═══════════════════════════════════════════════════════
+function showTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════════
+// FILTRO MES
+// ═══════════════════════════════════════════════════════
+function filtrarMes(mes, btn){
+  mesFiltro = mes;
+  document.querySelectorAll('.mes-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const labels = {todos:'Acumulado',ene:'Enero',feb:'Febrero',mar:'Marzo',abr:'Abril',may:'Mayo',jun:'Junio'};
+  document.getElementById('badge-mes').textContent = labels[mes] || mes;
+  renderKPIs();
+  renderPL();
+}
+
+const mesIdx = {ene:0,feb:1,mar:2,abr:3,may:4,jun:5};
+
+function getVal(arr){
+  if(mesFiltro==='todos') return arr.reduce((a,b)=>a+b,0);
+  const i = mesIdx[mesFiltro];
+  return i!==undefined ? arr[i] : 0;
+}
+
+// ═══════════════════════════════════════════════════════
+// KPIs
+// ═══════════════════════════════════════════════════════
+function renderKPIs(){
+  const cap = getVal(D.capital);
+  const fac = getVal(D.tot_bruto);
+  const res = getVal(D.resultado_neto);
+  const gasto = getVal(D.tot_gasto);
+  const sueldo = getVal(D.sueldos);
+  const incent = getVal(D.incentivos);
+  const ebitda = fac>0 ? (res/fac*100) : 0;
+
+  const kpis = [
+    {l:'Capital Recuperado',v:fmt(cap),s:'Total gestionado',c:'g'},
+    {l:'Facturación Bruta',v:fmt(fac),s:'HAD + HAC + Posiciones',c:'b'},
+    {l:'Resultado Neto',v:fmt(res),s:'Antes de IIGG',c:res>=0?'g':'r'},
+    {l:'EBITDA %',v:ebitda.toFixed(2)+'%',s:'Resultado / Facturación',c:ebitda>45?'g':ebitda>30?'y':'r'},
+    {l:'Costo Laboral Total',v:fmt(gasto),s:'Gasto cerrado del período',c:'b'},
+    {l:'Sueldos (base)',v:fmt(sueldo),s:'Costo laboral sin incentivos',c:'p'},
+    {l:'Incentivos + Premios',v:fmt(incent),s:'Variable sobre recupero',c:'y'},
+  ];
+
+  document.getElementById('kpi-area').innerHTML = kpis.map(k=>`
+    <div class="kpi ${k.c}">
+      <div class="kpi-lbl">${k.l}</div>
+      <div class="kpi-val ${colorClass(parseFloat(k.v.replace(/[^0-9.-]/g,'')))||''}">${k.v}</div>
+      <div class="kpi-sub">${k.s}</div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// P&L
+// ═══════════════════════════════════════════════════════
+function renderPL(){
+  const M = D.meses;
+  const rows = [
+    {lbl:'INGRESOS', sec:true},
+    {lbl:'Capital recuperado ($)',    arr:D.capital,    cls:''},
+    {lbl:'HAD cobrado ($)',           arr:D.had,        cls:'pos'},
+    {lbl:'HAC generado ($)',          arr:D.hac,        cls:'pos'},
+    {lbl:'Posiciones / Otros ($)',    arr:D.posic,      cls:''},
+    {lbl:'TOTAL BRUTO ($)',           arr:D.tot_bruto,  cls:'pos', tot:true},
+    {lbl:'COSTOS', sec:true},
+    {lbl:'RRHH Temprana ($)',         arr:D.rrhh_temp,  cls:'neg'},
+    {lbl:'RRHH Tardía ($)',           arr:D.rrhh_tard,  cls:'neg'},
+    {lbl:'Otros costos + Impuestos ($)',arr:D.otros_cos,cls:'neg'},
+    {lbl:'TOTAL GASTO CERRADO ($)',   arr:D.tot_gasto,  cls:'neg', tot:true},
+    {lbl:'RESULTADO', sec:true},
+    {lbl:'Resultado bruto ($)',       arr:D.resultado,  cls:'', tot:true},
+    {lbl:'Retenciones ($)',           arr:D.retenciones,cls:'neg'},
+    {lbl:'RESULTADO NETO ANTES IIGG ($)', arr:D.resultado_neto, cls:'', tot:true},
+    {lbl:'EBITDA %',                  arr:D.ebitda_pct, cls:'', pct:true},
+    {lbl:'HON % promedio',            arr:D.hon_pct,    cls:'', pct:true},
+    {lbl:'DESGLOSE COSTO LABORAL', sec:true},
+    {lbl:'Sueldos base ($)',          arr:D.sueldos,    cls:''},
+    {lbl:'Incentivos y premios ($)',  arr:D.incentivos, cls:'warn'},
+    {lbl:'Horas extras ($)',          arr:D.horas_ext,  cls:'warn'},
+  ];
+
+  let html = '';
+  const mi = mesFiltro !== 'todos' ? mesIdx[mesFiltro] : null;
+
+  rows.forEach(r=>{
+    if(r.sec){
+      html += `<tr class="rs"><td colspan="8">${r.lbl}</td></tr>`;
+      return;
+    }
+    const tr = r.tot ? 'class="rt"' : '';
+    let cells = '';
+    M.forEach((m,i)=>{
+      const v = r.arr[i];
+      let disp = '';
+      if(r.pct){
+        disp = v>0 ? v.toFixed(2)+'%' : '<span class="dim">—</span>';
+      } else {
+        disp = v!==0 ? `<span class="${r.cls||colorClass(v)}">${fmt(v)}</span>` : '<span class="dim">—</span>';
+      }
+      // Si hay filtro de mes, atenuar los otros
+      if(mi!==null && i!==mi){
+        cells += `<td style="opacity:.25">${disp}</td>`;
+      } else {
+        cells += `<td>${disp}</td>`;
+      }
+    });
+    // Columna total acumulado
+    let total_val = '';
+    if(r.pct){
+      const vals = r.arr.filter(v=>v>0);
+      total_val = vals.length ? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2)+'%' : '—';
+    } else {
+      const sum = r.arr.reduce((a,b)=>a+b,0);
+      total_val = `<span class="${r.cls||colorClass(sum)}">${fmt(sum)}</span>`;
+    }
+    html += `<tr ${tr}><td>${r.lbl}</td>${cells}<td>${total_val}</td></tr>`;
+  });
+
+  document.getElementById('pl-body').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// CHARTS
+// ═══════════════════════════════════════════════════════
+function bar(val, max, color, label){
+  const pct = max>0 ? Math.round(val/max*100) : 0;
+  return `<div class="br">
+    <div class="br-lbl">${label}</div>
+    <div class="br-track"><div class="br-fill" style="width:${pct}%;background:${color}">
+      <span>${fmt(val)}</span></div></div>
+    <div class="br-val ${colorClass(val)}">${fmt(val)}</div>
+  </div>`;
+}
+
+function renderCharts(){
+  const masa = D.sueldos.map((s,i)=>s+(D.incentivos[i]||0)+(D.horas_ext[i]||0));
+  const masaMax = Math.max(...masa);
+  document.getElementById('chart-masa').innerHTML =
+    ['ENE','FEB','MAR','ABR','MAY','JUN (sin SAC)'].map((m,i)=>{
+      const v = i<2 ? D.sueldos[i]+(D.incentivos[i]||0) :
+                i===4 ? 168689206 : i===5 ? 159391282 : masa[i];
+      const col = i===4 ? 'linear-gradient(90deg,#fbbf24,#d97706)' :
+                  i===5 ? 'linear-gradient(90deg,#a78bfa,#7c3aed)' :
+                  'linear-gradient(90deg,#4d9fff,#1d4ed8)';
+      return bar(v, 175000000, col, m);
+    }).join('');
+
+  // Sueldos vs incentivos
+  const compMax = Math.max(...D.sueldos.slice(0,4));
+  document.getElementById('chart-comp').innerHTML =
+    ['ENE','FEB','MAR','ABR'].map((m,i)=>`
+      ${bar(D.sueldos[i], compMax, 'linear-gradient(90deg,#4d9fff,#1d4ed8)', m+' Sueld.')}
+      ${bar(D.incentivos[i], compMax, 'linear-gradient(90deg,#fbbf24,#d97706)', m+' Incent.')}
+    `).join('<div style="height:6px"></div>');
+
+  // Facturación
+  const facMax = Math.max(...D.tot_bruto);
+  document.getElementById('chart-fac').innerHTML =
+    D.meses.slice(0,5).map((m,i)=>bar(D.tot_bruto[i],facMax,'linear-gradient(90deg,#4d9fff,#1d4ed8)',m)).join('');
+
+  // Capital
+  const capMax = Math.max(...D.capital);
+  document.getElementById('chart-cap').innerHTML =
+    D.meses.slice(0,5).map((m,i)=>bar(D.capital[i],capMax,'linear-gradient(90deg,#00e5c3,#059669)',m)).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// CLIENTES
+// ═══════════════════════════════════════════════════════
+function renderClientes(){
+  let html = '';
+  let isFirst = true;
+  CLIENTES.forEach(c=>{
+    if(isFirst || c.n==='ICBC Temprana'){
+      const label = isFirst ? 'MORA TARDÍA' : 'MORA TEMPRANA';
+      html += `<tr class="rs"><td colspan="17">${label} (valores exactos en $)</td></tr>`;
+    }
+    isFirst = false;
+
+    let cells = '';
+    for(let i=0;i<4;i++){
+      const t=c.tot[i], co=c.cos[i], m=t-co;
+      cells += `
+        <td class="${colorClass(t)}">${fmt(t)}</td>
+        <td class="neg">${co>0?fmt(co):'—'}</td>
+        <td class="${colorClass(m)}">${fmt(m)}</td>
+        <td style="border-right:${i<3?'1px solid var(--bdr)':'none'}">${nivelBadge(c.niveles[i])}</td>`;
+    }
+    html += `<tr><td>${c.n}</td>${cells}</tr>`;
+  });
+
+  // Total por mes
+  html += `<tr class="rt"><td>TOTAL MARGEN</td>`;
+  for(let i=0;i<4;i++){
+    const tot_fac = CLIENTES.reduce((a,c)=>a+c.tot[i],0);
+    const tot_cos = CLIENTES.reduce((a,c)=>a+c.cos[i],0);
+    const mar = tot_fac - tot_cos;
+    html += `<td class="pos">${fmt(tot_fac)}</td><td class="neg">${fmt(tot_cos)}</td>
+             <td class="pos">${fmt(mar)}</td><td style="border-right:${i<3?'1px solid var(--bdr)':'none'}"></td>`;
+  }
+  html += `</tr>`;
+  document.getElementById('cli-body').innerHTML = html;
+
+  // Headcount
+  let hc = '';
+  CLIENTES.filter(c=>c.ops.some(o=>o>0)).forEach(c=>{
+    const co_ene = c.cos[0]>0 && c.ops[0]>0 ? c.cos[0]/c.ops[0] : 0;
+    const co_abr = c.cos[3]>0 && c.ops[3]>0 ? c.cos[3]/c.ops[3] : 0;
+    const delta = co_ene>0 && co_abr>0 ? ((co_abr-co_ene)/co_ene*100) : 0;
+    hc += `<tr>
+      <td>${c.n}</td>
+      <td>${c.ops[0]||'—'}</td><td>${c.ops[1]||'—'}</td>
+      <td>${c.ops[2]||'—'}</td><td>${c.ops[3]||'—'}</td><td>${c.ops[4]||'—'}</td>
+      <td>${co_ene>0?fmt(co_ene):'—'}</td>
+      <td>${co_abr>0?fmt(co_abr):'—'}</td>
+      <td class="${delta>0?'neg':'pos'}">${delta!==0?(delta>0?'↑ +':'↓ ')+Math.abs(delta).toFixed(1)+'%':'—'}</td>
+    </tr>`;
+  });
+  document.getElementById('hc-body').innerHTML = hc;
+}
+
+// ═══════════════════════════════════════════════════════
+// ESCENARIOS
+// ═══════════════════════════════════════════════════════
+function calcularEscenarios(){
+  const g = id => parseFloat(document.getElementById(id).value) || 0;
+
+  const icbc_had = g('p_icbc_had')/100, icbc_hac = g('p_icbc_hac')/100;
+  const bsr_had  = g('p_bsr_had')/100,  bsr_hac  = g('p_bsr_hac')/100;
+  const cons_had = g('p_cons_had')/100, cons_hac = g('p_cons_hac')/100;
+  const sup_had  = g('p_sup_had')/100,  sup_hac  = g('p_sup_hac')/100;
+
+  const ops = {
+    icbc_t:    g('p_ops_icbc_t'),
+    icbc_temp: g('p_ops_icbc_temp'),
+    bsr:       g('p_ops_bsr'),
+    cons:      g('p_ops_cons'),
+    sup:       g('p_ops_sup'),
+    nar:       g('p_ops_nar'),
+    ciu:       g('p_ops_ciu'),
+  };
+
+  const cap = {
+    icbc_t:    g('p_cap_icbc_t'),
+    icbc_temp: g('p_cap_icbc_temp'),
+    bsr:       g('p_cap_bsr'),
+    cons:      g('p_cap_cons'),
+    sup:       g('p_cap_sup'),
+    nar:       g('p_cap_nar'),
+  };
+
+  const costo_op  = g('p_costo_op');
+  const costo_fijo = g('p_costo_fijo');
+  const pe_normal = g('p_pe_normal');
+  const pe_sacc   = g('p_pe_sacc');
+
+  function calcFac(capMap, hadMap, hacMap){
+    let fac = 0;
+    fac += capMap.icbc_t    * (hadMap.icbc + hacMap.icbc);
+    fac += capMap.icbc_temp * hacMap.icbc;
+    fac += capMap.bsr       * (hadMap.bsr  + hacMap.bsr);
+    fac += capMap.cons      * (hadMap.cons + hacMap.cons);
+    fac += capMap.sup       * (hadMap.sup  + hacMap.sup);
+    fac += capMap.nar       * 0.15;
+    return fac;
+  }
+
+  function calcCosto(opsMap){
+    return costo_fijo + Object.values(opsMap).reduce((a,b)=>a+b,0) * costo_op * 0.3;
+  }
+
+  function capitalTotal(capMap){ return Object.values(capMap).reduce((a,b)=>a+b,0); }
+
+  const hadM = {icbc:icbc_had, bsr:bsr_had, cons:cons_had, sup:sup_had};
+  const hacM = {icbc:icbc_hac, bsr:bsr_hac, cons:cons_hac, sup:sup_hac};
+
+  const escenarios_def = [
+    {n:'Base — Hoy', base:true, capM:{...cap}, opsM:{...ops}},
+    {n:'ICBC Sale Completo',
+     capM:{...cap, icbc_t:0, icbc_temp:0},
+     opsM:{...ops, icbc_t:0, icbc_temp:0}},
+    {n:'ICBC Tardía Sale',
+     capM:{...cap, icbc_t:0},
+     opsM:{...ops, icbc_t:0}},
+    {n:'Santander Deterioro -40%',
+     capM:{...cap, cons: cap.cons*0.6},
+     opsM:{...ops}},
+    {n:'BSR Sube +20%',
+     capM:{...cap, bsr: cap.bsr*1.2},
+     opsM:{...ops, bsr: Math.round(ops.bsr*1.2)}},
+    {n:'Supervielle Entra (licit.)',
+     capM:{...cap, sup: cap.sup*3},
+     opsM:{...ops, sup: ops.sup*3}},
+  ];
+
+  const resultados = escenarios_def.map(e=>{
+    const fac = calcFac(e.capM, hadM, hacM);
+    const cos = calcCosto(e.opsM);
+    const res = fac - cos;
+    const capTot = capitalTotal(e.capM);
+    return {...e, fac, cos, res, capTot,
+      ebitda: fac>0 ? res/fac : 0,
+      cubre_pe: capTot >= pe_normal,
+      cubre_sacc: capTot >= pe_sacc};
+  });
+
+  const base_res = resultados[0].res;
+
+  // Cards
+  document.getElementById('esc-results').innerHTML = resultados.map(r=>`
+    <div class="esc-card ${r.base?'base':''}">
+      <div class="esc-name" style="color:${r.base?'var(--acc)':''}">${r.n}</div>
+      <div class="esc-row"><span class="esc-k">Facturación</span>
+        <span class="esc-v pos">${fmt(r.fac)}</span></div>
+      <div class="esc-row"><span class="esc-k">Costo total</span>
+        <span class="esc-v neg">${fmt(r.cos)}</span></div>
+      <div class="esc-row"><span class="esc-k">Resultado</span>
+        <span class="esc-v ${colorClass(r.res)}">${fmt(r.res)}</span></div>
+      <div class="esc-row"><span class="esc-k">EBITDA %</span>
+        <span class="esc-v ${r.ebitda>0.4?'pos':r.ebitda>0.2?'warn':'neg'}">${(r.ebitda*100).toFixed(2)}%</span></div>
+      <div class="esc-row"><span class="esc-k">vs Base</span>
+        <span class="esc-v ${colorClass(r.res-base_res)}">${r.base?'—':fmt(r.res-base_res)}</span></div>
+      <div class="esc-row"><span class="esc-k">PE Normal</span>
+        <span>${r.cubre_pe?'<span class="tag-si">✔ SÍ</span>':'<span class="tag-no">✘ NO</span>'}</span></div>
+      <div class="esc-row"><span class="esc-k">PE SACC</span>
+        <span>${r.cubre_sacc?'<span class="tag-si">✔ SÍ</span>':'<span class="tag-no">✘ NO</span>'}</span></div>
+    </div>`).join('');
+
+  // Tabla comparativa
+  document.getElementById('esc-tabla').innerHTML = resultados.map(r=>`
+    <tr class="${r.base?'rt':''}">
+      <td>${r.n}</td>
+      <td class="pos">${fmt(r.fac)}</td>
+      <td class="neg">${fmt(r.cos)}</td>
+      <td class="${colorClass(r.res)}">${fmt(r.res)}</td>
+      <td class="${r.ebitda>0.4?'pos':r.ebitda>0.2?'warn':'neg'}">${(r.ebitda*100).toFixed(2)}%</td>
+      <td class="${colorClass(r.res-base_res)}">${r.base?'—':fmt(r.res-base_res)}</td>
+      <td>${r.cubre_pe?'<span class="tag-si">✔</span>':'<span class="tag-no">✘</span>'}</td>
+      <td>${r.cubre_sacc?'<span class="tag-si">✔</span>':'<span class="tag-no">✘</span>'}</td>
+    </tr>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+renderKPIs();
+renderPL();
+renderCharts();
+renderClientes();
+calcularEscenarios();
+</script>
+</body>
+</html>
