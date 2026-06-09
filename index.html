@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0061)file:///C:/Users/Usuario/GC_Financiero/GC_Dashboard_base.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>General Collect — Panel Financiero 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="./GC_Dashboard_base_files/css2" rel="stylesheet">
 <style>
 :root {
   --bg:#060d1a; --s1:#0c1525; --s2:#111e33; --s3:#162340;
@@ -168,10 +168,10 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
 </header>
 
 <nav>
-  <button class="active" onclick="showTab('resumen',this)">Resumen Ejecutivo</button>
-  <button onclick="showTab('clientes',this)">Rentabilidad por Cliente</button>
-  <button onclick="showTab('escenarios',this)">Simulador de Escenarios</button>
-  <button onclick="showTab('honorarios',this)">Honorarios Contractuales</button>
+  <button class="active" onclick="showTab(&#39;resumen&#39;,this)">Resumen Ejecutivo</button>
+  <button onclick="showTab(&#39;clientes&#39;,this)">Rentabilidad por Cliente</button>
+  <button onclick="showTab(&#39;escenarios&#39;,this)">Simulador de Escenarios</button>
+  <button onclick="showTab(&#39;honorarios&#39;,this)">Honorarios Contractuales</button>
 </nav>
 
 <main>
@@ -183,19 +183,54 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
 
   <div class="sec">Filtrar por mes</div>
   <div class="mes-filter">
-    <button class="mes-btn active" onclick="filtrarMes('todos',this)">Acumulado</button>
-    <button class="mes-btn" onclick="filtrarMes('ene',this)">ENE</button>
-    <button class="mes-btn" onclick="filtrarMes('feb',this)">FEB</button>
-    <button class="mes-btn" onclick="filtrarMes('mar',this)">MAR</button>
-    <button class="mes-btn" onclick="filtrarMes('abr',this)">ABR</button>
-    <button class="mes-btn" onclick="filtrarMes('may',this)">MAY</button>
-    <button class="mes-btn" onclick="filtrarMes('jun',this)">JUN ⚠</button>
+    <button class="mes-btn active" onclick="filtrarMes(&#39;todos&#39;,this)">Acumulado</button>
+    <button class="mes-btn" onclick="filtrarMes(&#39;ene&#39;,this)">ENE</button>
+    <button class="mes-btn" onclick="filtrarMes(&#39;feb&#39;,this)">FEB</button>
+    <button class="mes-btn" onclick="filtrarMes(&#39;mar&#39;,this)">MAR</button>
+    <button class="mes-btn" onclick="filtrarMes(&#39;abr&#39;,this)">ABR</button>
+    <button class="mes-btn" onclick="filtrarMes(&#39;may&#39;,this)">MAY</button>
+    <button class="mes-btn" onclick="filtrarMes(&#39;jun&#39;,this)">JUN ⚠</button>
   </div>
 
   <div class="sec">KPIs principales</div>
-  <div class="kpi-grid" id="kpi-area"></div>
+  <div class="kpi-grid" id="kpi-area">
+    <div class="kpi g">
+      <div class="kpi-lbl">Capital Recuperado</div>
+      <div class="kpi-val pos">$ 11.170.899.770</div>
+      <div class="kpi-sub">Total gestionado</div>
+    </div>
+    <div class="kpi b">
+      <div class="kpi-lbl">Facturación Bruta</div>
+      <div class="kpi-val pos">$ 4.097.706.217</div>
+      <div class="kpi-sub">HAD + HAC + Posiciones</div>
+    </div>
+    <div class="kpi g">
+      <div class="kpi-lbl">Resultado Neto</div>
+      <div class="kpi-val pos">$ 1.891.798.703</div>
+      <div class="kpi-sub">Antes de IIGG</div>
+    </div>
+    <div class="kpi g">
+      <div class="kpi-lbl">EBITDA %</div>
+      <div class="kpi-val pos">46.17%</div>
+      <div class="kpi-sub">Resultado / Facturación</div>
+    </div>
+    <div class="kpi b">
+      <div class="kpi-lbl">Costo Laboral Total</div>
+      <div class="kpi-val pos">$ 1.940.762.691</div>
+      <div class="kpi-sub">Gasto cerrado del período</div>
+    </div>
+    <div class="kpi p">
+      <div class="kpi-lbl">Sueldos (base)</div>
+      <div class="kpi-val pos">$ 483.682.653</div>
+      <div class="kpi-sub">Costo laboral sin incentivos</div>
+    </div>
+    <div class="kpi y">
+      <div class="kpi-lbl">Incentivos + Premios</div>
+      <div class="kpi-val pos">$ 205.028.701</div>
+      <div class="kpi-sub">Variable sobre recupero</div>
+    </div></div>
 
-  <div class="sec">P&L Completo</div>
+  <div class="sec">P&amp;L Completo</div>
   <div class="tw">
     <table>
       <thead>
@@ -210,7 +245,7 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
           <th class="col-todos" style="background:#0a1628;color:var(--acc2)">TOTAL</th>
         </tr>
       </thead>
-      <tbody id="pl-body"></tbody>
+      <tbody id="pl-body"><tr class="rs"><td colspan="8">INGRESOS</td></tr><tr><td>Capital recuperado ($)</td><td><span class="pos">$ 1.841.863.409</span></td><td><span class="pos">$ 1.978.236.742</span></td><td><span class="pos">$ 2.463.320.483</span></td><td><span class="pos">$ 2.545.147.589</span></td><td><span class="pos">$ 2.342.331.547</span></td><td><span class="dim">—</span></td><td><span class="pos">$ 11.170.899.770</span></td></tr><tr><td>HAD cobrado ($)</td><td><span class="pos">$ 248.256.654</span></td><td><span class="pos">$ 251.696.822</span></td><td><span class="pos">$ 335.352.839</span></td><td><span class="pos">$ 316.547.879</span></td><td><span class="pos">$ 316.721.732</span></td><td><span class="dim">—</span></td><td><span class="pos">$ 1.468.575.926</span></td></tr><tr><td>HAC generado ($)</td><td><span class="pos">$ 324.242.747</span></td><td><span class="pos">$ 344.299.081</span></td><td><span class="pos">$ 434.529.477</span></td><td><span class="pos">$ 417.855.089</span></td><td><span class="pos">$ 417.712.930</span></td><td><span class="dim">—</span></td><td><span class="pos">$ 1.938.639.324</span></td></tr><tr><td>Posiciones / Otros ($)</td><td><span class="pos">$ 146.086.319</span></td><td><span class="pos">$ 122.438.849</span></td><td><span class="pos">$ 136.468.060</span></td><td><span class="pos">$ 135.032.517</span></td><td><span class="pos">$ 150.465.219</span></td><td><span class="dim">—</span></td><td><span class="pos">$ 690.490.964</span></td></tr><tr class="rt"><td>TOTAL BRUTO ($)</td><td><span class="pos">$ 718.585.720</span></td><td><span class="pos">$ 718.434.753</span></td><td><span class="pos">$ 906.350.376</span></td><td><span class="pos">$ 869.435.486</span></td><td><span class="pos">$ 884.899.882</span></td><td><span class="dim">—</span></td><td><span class="pos">$ 4.097.706.217</span></td></tr><tr class="rs"><td colspan="8">COSTOS</td></tr><tr><td>RRHH Temprana ($)</td><td><span class="dim">—</span></td><td><span class="neg">$ 75.134.086</span></td><td><span class="neg">$ 86.203.026</span></td><td><span class="neg">$ 80.712.242</span></td><td><span class="neg">$ 86.545.056</span></td><td><span class="neg">$ 15.464.396</span></td><td><span class="neg">$ 344.058.806</span></td></tr><tr><td>RRHH Tardía ($)</td><td><span class="dim">—</span></td><td><span class="neg">$ 216.457.724</span></td><td><span class="neg">$ 232.931.581</span></td><td><span class="neg">$ 236.984.882</span></td><td><span class="neg">$ 265.279.413</span></td><td><span class="neg">$ 377.656.186</span></td><td><span class="neg">$ 1.329.309.786</span></td></tr><tr><td>Otros costos + Impuestos ($)</td><td><span class="dim">—</span></td><td><span class="dim">—</span></td><td><span class="dim">—</span></td><td><span class="dim">—</span></td><td><span class="dim">—</span></td><td><span class="neg">$ 267.393.895</span></td><td><span class="neg">$ 267.393.895</span></td></tr><tr class="rt"><td>TOTAL GASTO CERRADO ($)</td><td><span class="dim">—</span></td><td><span class="neg">$ 291.591.810</span></td><td><span class="neg">$ 319.134.607</span></td><td><span class="neg">$ 317.697.125</span></td><td><span class="neg">$ 351.824.470</span></td><td><span class="neg">$ 660.514.679</span></td><td><span class="neg">$ 1.940.762.691</span></td></tr><tr class="rs"><td colspan="8">RESULTADO</td></tr><tr class="rt"><td>Resultado bruto ($)</td><td><span class="pos">$ 718.585.720</span></td><td><span class="pos">$ 427.843</span></td><td><span class="pos">$ 587.215.769</span></td><td><span class="pos">$ 551.738.361</span></td><td><span class="pos">$ 533.075.412</span></td><td><span class="neg">(470.140.427)</span></td><td><span class="pos">$ 1.920.902.678</span></td></tr><tr><td>Retenciones ($)</td><td><span class="neg">$ 105.199.670</span></td><td><span class="neg">$ 65.092.799</span></td><td><span class="neg">$ 107.266.598</span></td><td><span class="neg">$ 108.064.617</span></td><td><span class="neg">$ 69.895.387</span></td><td><span class="dim">—</span></td><td><span class="neg">$ 455.519.071</span></td></tr><tr class="rt"><td>RESULTADO NETO ANTES IIGG ($)</td><td><span class="pos">$ 613.386.049</span></td><td><span class="pos">$ 361.750.143</span></td><td><span class="pos">$ 479.949.171</span></td><td><span class="pos">$ 443.673.743</span></td><td><span class="pos">$ 463.180.024</span></td><td><span class="neg">(470.140.427)</span></td><td><span class="pos">$ 1.891.798.703</span></td></tr><tr><td>EBITDA %</td><td>85.36%</td><td>50.35%</td><td>52.95%</td><td>51.03%</td><td>52.34%</td><td><span class="dim">—</span></td><td>58.41%</td></tr><tr><td>HON % promedio</td><td>31.08%</td><td>30.13%</td><td>31.25%</td><td>28.86%</td><td>31.35%</td><td><span class="dim">—</span></td><td>30.53%</td></tr><tr class="rs"><td colspan="8">DESGLOSE COSTO LABORAL</td></tr><tr><td>Sueldos base ($)</td><td><span class="pos">$ 109.889.314</span></td><td><span class="pos">$ 118.119.082</span></td><td><span class="pos">$ 126.476.269</span></td><td><span class="pos">$ 129.197.988</span></td><td><span class="dim">—</span></td><td><span class="dim">—</span></td><td><span class="pos">$ 483.682.653</span></td></tr><tr><td>Incentivos y premios ($)</td><td><span class="warn">$ 34.557.609</span></td><td><span class="warn">$ 50.512.953</span></td><td><span class="warn">$ 51.730.218</span></td><td><span class="warn">$ 68.227.921</span></td><td><span class="dim">—</span></td><td><span class="dim">—</span></td><td><span class="warn">$ 205.028.701</span></td></tr><tr><td>Horas extras ($)</td><td><span class="warn">$ 9.400.000</span></td><td><span class="warn">$ 11.900.000</span></td><td><span class="warn">$ 7.800.000</span></td><td><span class="dim">—</span></td><td><span class="dim">—</span></td><td><span class="dim">—</span></td><td><span class="warn">$ 29.100.000</span></td></tr></tbody>
     </table>
   </div>
   <p style="font-size:10px;color:var(--muted);margin-bottom:24px">* JUN: venta no cargada — solo costos parciales registrados. ENE: costos totales no cargados en el cierre.</p>
@@ -219,11 +254,93 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
   <div class="chart-2">
     <div class="cc">
       <div class="ct">Costo total laboral por mes</div>
-      <div id="chart-masa"></div>
+      <div id="chart-masa"><div class="br">
+    <div class="br-lbl">ENE</div>
+    <div class="br-track"><div class="br-fill" style="width:83%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 144.446.923</span></div></div>
+    <div class="br-val pos">$ 144.446.923</div>
+  </div><div class="br">
+    <div class="br-lbl">FEB</div>
+    <div class="br-track"><div class="br-fill" style="width:96%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 168.632.035</span></div></div>
+    <div class="br-val pos">$ 168.632.035</div>
+  </div><div class="br">
+    <div class="br-lbl">MAR</div>
+    <div class="br-track"><div class="br-fill" style="width:106%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 186.006.487</span></div></div>
+    <div class="br-val pos">$ 186.006.487</div>
+  </div><div class="br">
+    <div class="br-lbl">ABR</div>
+    <div class="br-track"><div class="br-fill" style="width:113%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 197.425.909</span></div></div>
+    <div class="br-val pos">$ 197.425.909</div>
+  </div><div class="br">
+    <div class="br-lbl">MAY</div>
+    <div class="br-track"><div class="br-fill" style="width:96%;background:linear-gradient(90deg,#fbbf24,#d97706)">
+      <span>$ 168.689.206</span></div></div>
+    <div class="br-val pos">$ 168.689.206</div>
+  </div><div class="br">
+    <div class="br-lbl">JUN (sin SAC)</div>
+    <div class="br-track"><div class="br-fill" style="width:91%;background:linear-gradient(90deg,#a78bfa,#7c3aed)">
+      <span>$ 159.391.282</span></div></div>
+    <div class="br-val pos">$ 159.391.282</div>
+  </div></div>
     </div>
     <div class="cc">
       <div class="ct">Sueldos vs Incentivos ENE–ABR</div>
-      <div id="chart-comp"></div>
+      <div id="chart-comp">
+      <div class="br">
+    <div class="br-lbl">ENE Sueld.</div>
+    <div class="br-track"><div class="br-fill" style="width:85%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 109.889.314</span></div></div>
+    <div class="br-val pos">$ 109.889.314</div>
+  </div>
+      <div class="br">
+    <div class="br-lbl">ENE Incent.</div>
+    <div class="br-track"><div class="br-fill" style="width:27%;background:linear-gradient(90deg,#fbbf24,#d97706)">
+      <span>$ 34.557.609</span></div></div>
+    <div class="br-val pos">$ 34.557.609</div>
+  </div>
+    <div style="height:6px"></div>
+      <div class="br">
+    <div class="br-lbl">FEB Sueld.</div>
+    <div class="br-track"><div class="br-fill" style="width:91%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 118.119.082</span></div></div>
+    <div class="br-val pos">$ 118.119.082</div>
+  </div>
+      <div class="br">
+    <div class="br-lbl">FEB Incent.</div>
+    <div class="br-track"><div class="br-fill" style="width:39%;background:linear-gradient(90deg,#fbbf24,#d97706)">
+      <span>$ 50.512.953</span></div></div>
+    <div class="br-val pos">$ 50.512.953</div>
+  </div>
+    <div style="height:6px"></div>
+      <div class="br">
+    <div class="br-lbl">MAR Sueld.</div>
+    <div class="br-track"><div class="br-fill" style="width:98%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 126.476.269</span></div></div>
+    <div class="br-val pos">$ 126.476.269</div>
+  </div>
+      <div class="br">
+    <div class="br-lbl">MAR Incent.</div>
+    <div class="br-track"><div class="br-fill" style="width:40%;background:linear-gradient(90deg,#fbbf24,#d97706)">
+      <span>$ 51.730.218</span></div></div>
+    <div class="br-val pos">$ 51.730.218</div>
+  </div>
+    <div style="height:6px"></div>
+      <div class="br">
+    <div class="br-lbl">ABR Sueld.</div>
+    <div class="br-track"><div class="br-fill" style="width:100%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 129.197.988</span></div></div>
+    <div class="br-val pos">$ 129.197.988</div>
+  </div>
+      <div class="br">
+    <div class="br-lbl">ABR Incent.</div>
+    <div class="br-track"><div class="br-fill" style="width:53%;background:linear-gradient(90deg,#fbbf24,#d97706)">
+      <span>$ 68.227.921</span></div></div>
+    <div class="br-val pos">$ 68.227.921</div>
+  </div>
+    </div>
     </div>
   </div>
 
@@ -231,11 +348,61 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
   <div class="chart-2">
     <div class="cc">
       <div class="ct">Facturación bruta por mes ($)</div>
-      <div id="chart-fac"></div>
+      <div id="chart-fac"><div class="br">
+    <div class="br-lbl">ENE</div>
+    <div class="br-track"><div class="br-fill" style="width:79%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 718.585.720</span></div></div>
+    <div class="br-val pos">$ 718.585.720</div>
+  </div><div class="br">
+    <div class="br-lbl">FEB</div>
+    <div class="br-track"><div class="br-fill" style="width:79%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 718.434.753</span></div></div>
+    <div class="br-val pos">$ 718.434.753</div>
+  </div><div class="br">
+    <div class="br-lbl">MAR</div>
+    <div class="br-track"><div class="br-fill" style="width:100%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 906.350.376</span></div></div>
+    <div class="br-val pos">$ 906.350.376</div>
+  </div><div class="br">
+    <div class="br-lbl">ABR</div>
+    <div class="br-track"><div class="br-fill" style="width:96%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 869.435.486</span></div></div>
+    <div class="br-val pos">$ 869.435.486</div>
+  </div><div class="br">
+    <div class="br-lbl">MAY</div>
+    <div class="br-track"><div class="br-fill" style="width:98%;background:linear-gradient(90deg,#4d9fff,#1d4ed8)">
+      <span>$ 884.899.882</span></div></div>
+    <div class="br-val pos">$ 884.899.882</div>
+  </div></div>
     </div>
     <div class="cc">
       <div class="ct">Capital recuperado por mes ($)</div>
-      <div id="chart-cap"></div>
+      <div id="chart-cap"><div class="br">
+    <div class="br-lbl">ENE</div>
+    <div class="br-track"><div class="br-fill" style="width:72%;background:linear-gradient(90deg,#00e5c3,#059669)">
+      <span>$ 1.841.863.409</span></div></div>
+    <div class="br-val pos">$ 1.841.863.409</div>
+  </div><div class="br">
+    <div class="br-lbl">FEB</div>
+    <div class="br-track"><div class="br-fill" style="width:78%;background:linear-gradient(90deg,#00e5c3,#059669)">
+      <span>$ 1.978.236.742</span></div></div>
+    <div class="br-val pos">$ 1.978.236.742</div>
+  </div><div class="br">
+    <div class="br-lbl">MAR</div>
+    <div class="br-track"><div class="br-fill" style="width:97%;background:linear-gradient(90deg,#00e5c3,#059669)">
+      <span>$ 2.463.320.483</span></div></div>
+    <div class="br-val pos">$ 2.463.320.483</div>
+  </div><div class="br">
+    <div class="br-lbl">ABR</div>
+    <div class="br-track"><div class="br-fill" style="width:100%;background:linear-gradient(90deg,#00e5c3,#059669)">
+      <span>$ 2.545.147.589</span></div></div>
+    <div class="br-val pos">$ 2.545.147.589</div>
+  </div><div class="br">
+    <div class="br-lbl">MAY</div>
+    <div class="br-track"><div class="br-fill" style="width:92%;background:linear-gradient(90deg,#00e5c3,#059669)">
+      <span>$ 2.342.331.547</span></div></div>
+    <div class="br-val pos">$ 2.342.331.547</div>
+  </div></div>
     </div>
   </div>
 
@@ -264,7 +431,139 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
           <th>Fac. Total</th><th>Costo N6</th><th>Margen</th><th>Nivel</th>
         </tr>
       </thead>
-      <tbody id="cli-body"></tbody>
+      <tbody id="cli-body"><tr class="rs"><td colspan="17">MORA TARDÍA (valores exactos en $)</td></tr><tr><td>ICBC Tardía</td>
+        <td class="pos">$ 349.344.923</td>
+        <td class="neg">$ 31.393.641</td>
+        <td class="pos">$ 317.951.282</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 297.386.188</td>
+        <td class="neg">$ 39.859.931</td>
+        <td class="pos">$ 257.526.257</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 389.014.685</td>
+        <td class="neg">$ 40.552.912</td>
+        <td class="pos">$ 348.461.773</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 477.676.907</td>
+        <td class="neg">$ 45.847.364</td>
+        <td class="pos">$ 431.829.543</td>
+        <td style="border-right:none"><span class="niv n6">N6</span></td></tr><tr><td>BSR</td>
+        <td class="pos">$ 107.792.713</td>
+        <td class="neg">$ 51.258.998</td>
+        <td class="pos">$ 56.533.715</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 146.017.625</td>
+        <td class="neg">$ 58.740.951</td>
+        <td class="pos">$ 87.276.674</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 192.984.841</td>
+        <td class="neg">$ 59.762.187</td>
+        <td class="pos">$ 133.222.654</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 177.749.000</td>
+        <td class="neg">$ 72.045.857</td>
+        <td class="pos">$ 105.703.143</td>
+        <td style="border-right:none"><span class="niv n6">N6</span></td></tr><tr><td>Santander Consumer</td>
+        <td class="pos">$ 115.894.923</td>
+        <td class="neg">$ 26.161.367</td>
+        <td class="pos">$ 89.733.556</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 121.520.227</td>
+        <td class="neg">$ 31.468.366</td>
+        <td class="pos">$ 90.051.861</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 149.669.071</td>
+        <td class="neg">$ 32.015.457</td>
+        <td class="pos">$ 117.653.614</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 155.385.285</td>
+        <td class="neg">$ 41.480.948</td>
+        <td class="pos">$ 113.904.337</td>
+        <td style="border-right:none"><span class="niv n6">N6</span></td></tr><tr><td>Naranja X</td>
+        <td class="pos">$ 24.190.322</td>
+        <td class="neg">$ 43.602.279</td>
+        <td class="neg">(19.411.957)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n3">N3</span></td>
+        <td class="pos">$ 26.363.577</td>
+        <td class="neg">$ 52.447.278</td>
+        <td class="neg">(26.083.701)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n4">N4</span></td>
+        <td class="pos">$ 48.455.528</td>
+        <td class="neg">$ 53.359.095</td>
+        <td class="neg">(4.903.567)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n5">N5</span></td>
+        <td class="pos">$ 31.944.000</td>
+        <td class="neg">$ 63.313.026</td>
+        <td class="neg">(31.369.026)</td>
+        <td style="border-right:none"><span class="niv n4">N4</span></td></tr><tr><td>Supervielle Tardía</td>
+        <td class="pos">$ 25.821.637</td>
+        <td class="neg">$ 43.602.279</td>
+        <td class="neg">(17.780.642)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n1">N1</span></td>
+        <td class="pos">$ 19.954.285</td>
+        <td class="neg">$ 52.447.278</td>
+        <td class="neg">(32.492.993)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n1">N1</span></td>
+        <td class="pos">$ 21.096.110</td>
+        <td class="neg">$ 53.359.095</td>
+        <td class="neg">(32.262.985)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n1">N1</span></td>
+        <td class="pos">$ 21.096.110</td>
+        <td class="neg">$ 41.480.948</td>
+        <td class="neg">(20.384.838)</td>
+        <td style="border-right:none"><span class="niv n1">N1</span></td></tr><tr class="rs"><td colspan="17">MORA TEMPRANA (valores exactos en $)</td></tr><tr><td>ICBC Temprana</td>
+        <td class="pos">$ 96.535.512</td>
+        <td class="neg">$ 51.258.998</td>
+        <td class="pos">$ 45.276.514</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 84.833.816</td>
+        <td class="neg">$ 53.743.724</td>
+        <td class="pos">$ 31.090.092</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 84.833.816</td>
+        <td class="neg">$ 48.174.335</td>
+        <td class="pos">$ 36.659.481</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 84.833.816</td>
+        <td class="neg">$ 52.256.921</td>
+        <td class="pos">$ 32.576.895</td>
+        <td style="border-right:none"><span class="niv n6">N6</span></td></tr><tr><td>Ciudad Temprana</td>
+        <td class="pos">$ 7.623.653</td>
+        <td class="neg">$ 7.688.849</td>
+        <td class="neg">(65.196)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n4">N4</span></td>
+        <td class="pos">$ 7.623.653</td>
+        <td class="neg">$ 10.076.948</td>
+        <td class="neg">(2.453.295)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n2">N2</span></td>
+        <td class="pos">$ 7.623.653</td>
+        <td class="neg">$ 9.032.687</td>
+        <td class="neg">(1.409.034)</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n2">N2</span></td>
+        <td class="pos">$ 13.341.393</td>
+        <td class="neg">$ 8.958.329</td>
+        <td class="pos">$ 4.383.064</td>
+        <td style="border-right:none"><span class="niv n5">N5</span></td></tr><tr><td>Adquiridas</td>
+        <td class="pos">$ 4.820.494</td>
+        <td class="neg">—</td>
+        <td class="pos">$ 4.820.494</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 2.256.265</td>
+        <td class="neg">—</td>
+        <td class="pos">$ 2.256.265</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 3.317.593</td>
+        <td class="neg">—</td>
+        <td class="pos">$ 3.317.593</td>
+        <td style="border-right:1px solid var(--bdr)"><span class="niv n6">N6</span></td>
+        <td class="pos">$ 3.317.593</td>
+        <td class="neg">—</td>
+        <td class="pos">$ 3.317.593</td>
+        <td style="border-right:none"><span class="niv n6">N6</span></td></tr><tr class="rt"><td>TOTAL MARGEN</td><td class="pos">$ 732.024.177</td><td class="neg">$ 254.966.411</td>
+             <td class="pos">$ 477.057.766</td><td style="border-right:1px solid var(--bdr)"></td><td class="pos">$ 705.955.636</td><td class="neg">$ 298.784.476</td>
+             <td class="pos">$ 407.171.160</td><td style="border-right:1px solid var(--bdr)"></td><td class="pos">$ 896.995.297</td><td class="neg">$ 296.255.768</td>
+             <td class="pos">$ 600.739.529</td><td style="border-right:1px solid var(--bdr)"></td><td class="pos">$ 965.344.104</td><td class="neg">$ 325.383.393</td>
+             <td class="pos">$ 639.960.711</td><td style="border-right:none"></td></tr></tbody>
     </table>
   </div>
 
@@ -278,7 +577,56 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
           <th>Costo/op ENE</th><th>Costo/op ABR</th><th>Variación</th>
         </tr>
       </thead>
-      <tbody id="hc-body"></tbody>
+      <tbody id="hc-body"><tr>
+      <td>ICBC Tardía</td>
+      <td>18</td><td>19</td>
+      <td>19</td><td>21</td><td>25</td>
+      <td>$ 1.744.091</td>
+      <td>$ 2.183.208</td>
+      <td class="neg">↑ +25.2%</td>
+    </tr><tr>
+      <td>BSR</td>
+      <td>28</td><td>28</td>
+      <td>28</td><td>33</td><td>38</td>
+      <td>$ 1.830.679</td>
+      <td>$ 2.183.208</td>
+      <td class="neg">↑ +19.3%</td>
+    </tr><tr>
+      <td>Santander Consumer</td>
+      <td>15</td><td>15</td>
+      <td>15</td><td>19</td><td>20</td>
+      <td>$ 1.744.091</td>
+      <td>$ 2.183.208</td>
+      <td class="neg">↑ +25.2%</td>
+    </tr><tr>
+      <td>Naranja X</td>
+      <td>25</td><td>25</td>
+      <td>25</td><td>29</td><td>24</td>
+      <td>$ 1.744.091</td>
+      <td>$ 2.183.208</td>
+      <td class="neg">↑ +25.2%</td>
+    </tr><tr>
+      <td>Supervielle Tardía</td>
+      <td>17</td><td>16</td>
+      <td>16</td><td>19</td><td>17</td>
+      <td>$ 2.564.840</td>
+      <td>$ 2.183.208</td>
+      <td class="pos">↓ 14.9%</td>
+    </tr><tr>
+      <td>ICBC Temprana</td>
+      <td>40</td><td>32</td>
+      <td>32</td><td>35</td><td>35</td>
+      <td>$ 1.281.475</td>
+      <td>$ 1.493.055</td>
+      <td class="neg">↑ +16.5%</td>
+    </tr><tr>
+      <td>Ciudad Temprana</td>
+      <td>6</td><td>6</td>
+      <td>6</td><td>8</td><td>8</td>
+      <td>$ 1.281.475</td>
+      <td>$ 1.119.791</td>
+      <td class="pos">↓ 12.6%</td>
+    </tr></tbody>
     </table>
   </div>
 </div>
@@ -339,7 +687,109 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
   </div>
 
   <div class="sec">Resultados de escenarios</div>
-  <div class="esc-results" id="esc-results"></div>
+  <div class="esc-results" id="esc-results">
+    <div class="esc-card base">
+      <div class="esc-name" style="color:var(--acc)">Base — Hoy</div>
+      <div class="esc-row"><span class="esc-k">Facturación</span>
+        <span class="esc-v pos">$ 1.058.886.667</span></div>
+      <div class="esc-row"><span class="esc-k">Costo total</span>
+        <span class="esc-v neg">$ 438.237.125</span></div>
+      <div class="esc-row"><span class="esc-k">Resultado</span>
+        <span class="esc-v pos">$ 620.649.542</span></div>
+      <div class="esc-row"><span class="esc-k">EBITDA %</span>
+        <span class="esc-v pos">58.61%</span></div>
+      <div class="esc-row"><span class="esc-k">vs Base</span>
+        <span class="esc-v dim">—</span></div>
+      <div class="esc-row"><span class="esc-k">PE Normal</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+      <div class="esc-row"><span class="esc-k">PE SACC</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+    </div>
+    <div class="esc-card ">
+      <div class="esc-name" style="color:">ICBC Sale Completo</div>
+      <div class="esc-row"><span class="esc-k">Facturación</span>
+        <span class="esc-v pos">$ 505.876.667</span></div>
+      <div class="esc-row"><span class="esc-k">Costo total</span>
+        <span class="esc-v neg">$ 397.077.125</span></div>
+      <div class="esc-row"><span class="esc-k">Resultado</span>
+        <span class="esc-v pos">$ 108.799.542</span></div>
+      <div class="esc-row"><span class="esc-k">EBITDA %</span>
+        <span class="esc-v warn">21.51%</span></div>
+      <div class="esc-row"><span class="esc-k">vs Base</span>
+        <span class="esc-v neg">(511.850.000)</span></div>
+      <div class="esc-row"><span class="esc-k">PE Normal</span>
+        <span><span class="tag-no">✘ NO</span></span></div>
+      <div class="esc-row"><span class="esc-k">PE SACC</span>
+        <span><span class="tag-no">✘ NO</span></span></div>
+    </div>
+    <div class="esc-card ">
+      <div class="esc-name" style="color:">ICBC Tardía Sale</div>
+      <div class="esc-row"><span class="esc-k">Facturación</span>
+        <span class="esc-v pos">$ 581.526.667</span></div>
+      <div class="esc-row"><span class="esc-k">Costo total</span>
+        <span class="esc-v neg">$ 422.802.125</span></div>
+      <div class="esc-row"><span class="esc-k">Resultado</span>
+        <span class="esc-v pos">$ 158.724.542</span></div>
+      <div class="esc-row"><span class="esc-k">EBITDA %</span>
+        <span class="esc-v warn">27.29%</span></div>
+      <div class="esc-row"><span class="esc-k">vs Base</span>
+        <span class="esc-v neg">(461.925.000)</span></div>
+      <div class="esc-row"><span class="esc-k">PE Normal</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+      <div class="esc-row"><span class="esc-k">PE SACC</span>
+        <span><span class="tag-no">✘ NO</span></span></div>
+    </div>
+    <div class="esc-card ">
+      <div class="esc-name" style="color:">Santander Deterioro -40%</div>
+      <div class="esc-row"><span class="esc-k">Facturación</span>
+        <span class="esc-v pos">$ 996.806.667</span></div>
+      <div class="esc-row"><span class="esc-k">Costo total</span>
+        <span class="esc-v neg">$ 438.237.125</span></div>
+      <div class="esc-row"><span class="esc-k">Resultado</span>
+        <span class="esc-v pos">$ 558.569.542</span></div>
+      <div class="esc-row"><span class="esc-k">EBITDA %</span>
+        <span class="esc-v pos">56.04%</span></div>
+      <div class="esc-row"><span class="esc-k">vs Base</span>
+        <span class="esc-v neg">(62.080.000)</span></div>
+      <div class="esc-row"><span class="esc-k">PE Normal</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+      <div class="esc-row"><span class="esc-k">PE SACC</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+    </div>
+    <div class="esc-card ">
+      <div class="esc-name" style="color:">BSR Sube +20%</div>
+      <div class="esc-row"><span class="esc-k">Facturación</span>
+        <span class="esc-v pos">$ 1.118.120.000</span></div>
+      <div class="esc-row"><span class="esc-k">Costo total</span>
+        <span class="esc-v neg">$ 443.382.125</span></div>
+      <div class="esc-row"><span class="esc-k">Resultado</span>
+        <span class="esc-v pos">$ 674.737.875</span></div>
+      <div class="esc-row"><span class="esc-k">EBITDA %</span>
+        <span class="esc-v pos">60.35%</span></div>
+      <div class="esc-row"><span class="esc-k">vs Base</span>
+        <span class="esc-v pos">$ 54.088.333</span></div>
+      <div class="esc-row"><span class="esc-k">PE Normal</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+      <div class="esc-row"><span class="esc-k">PE SACC</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+    </div>
+    <div class="esc-card ">
+      <div class="esc-name" style="color:">Supervielle Entra (licit.)</div>
+      <div class="esc-row"><span class="esc-k">Facturación</span>
+        <span class="esc-v pos">$ 1.136.106.667</span></div>
+      <div class="esc-row"><span class="esc-k">Costo total</span>
+        <span class="esc-v neg">$ 466.167.125</span></div>
+      <div class="esc-row"><span class="esc-k">Resultado</span>
+        <span class="esc-v pos">$ 669.939.542</span></div>
+      <div class="esc-row"><span class="esc-k">EBITDA %</span>
+        <span class="esc-v pos">58.97%</span></div>
+      <div class="esc-row"><span class="esc-k">vs Base</span>
+        <span class="esc-v pos">$ 49.290.000</span></div>
+      <div class="esc-row"><span class="esc-k">PE Normal</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+      <div class="esc-row"><span class="esc-k">PE SACC</span>
+        <span><span class="tag-si">✔ SÍ</span></span></div>
+    </div></div>
 
   <div class="sec">Comparativo de escenarios</div>
   <div class="tw">
@@ -356,7 +806,67 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
           <th>PE SACC</th>
         </tr>
       </thead>
-      <tbody id="esc-tabla"></tbody>
+      <tbody id="esc-tabla">
+    <tr class="rt">
+      <td>Base — Hoy</td>
+      <td class="pos">$ 1.058.886.667</td>
+      <td class="neg">$ 438.237.125</td>
+      <td class="pos">$ 620.649.542</td>
+      <td class="pos">58.61%</td>
+      <td class="dim">—</td>
+      <td><span class="tag-si">✔</span></td>
+      <td><span class="tag-si">✔</span></td>
+    </tr>
+    <tr class="">
+      <td>ICBC Sale Completo</td>
+      <td class="pos">$ 505.876.667</td>
+      <td class="neg">$ 397.077.125</td>
+      <td class="pos">$ 108.799.542</td>
+      <td class="warn">21.51%</td>
+      <td class="neg">(511.850.000)</td>
+      <td><span class="tag-no">✘</span></td>
+      <td><span class="tag-no">✘</span></td>
+    </tr>
+    <tr class="">
+      <td>ICBC Tardía Sale</td>
+      <td class="pos">$ 581.526.667</td>
+      <td class="neg">$ 422.802.125</td>
+      <td class="pos">$ 158.724.542</td>
+      <td class="warn">27.29%</td>
+      <td class="neg">(461.925.000)</td>
+      <td><span class="tag-si">✔</span></td>
+      <td><span class="tag-no">✘</span></td>
+    </tr>
+    <tr class="">
+      <td>Santander Deterioro -40%</td>
+      <td class="pos">$ 996.806.667</td>
+      <td class="neg">$ 438.237.125</td>
+      <td class="pos">$ 558.569.542</td>
+      <td class="pos">56.04%</td>
+      <td class="neg">(62.080.000)</td>
+      <td><span class="tag-si">✔</span></td>
+      <td><span class="tag-si">✔</span></td>
+    </tr>
+    <tr class="">
+      <td>BSR Sube +20%</td>
+      <td class="pos">$ 1.118.120.000</td>
+      <td class="neg">$ 443.382.125</td>
+      <td class="pos">$ 674.737.875</td>
+      <td class="pos">60.35%</td>
+      <td class="pos">$ 54.088.333</td>
+      <td><span class="tag-si">✔</span></td>
+      <td><span class="tag-si">✔</span></td>
+    </tr>
+    <tr class="">
+      <td>Supervielle Entra (licit.)</td>
+      <td class="pos">$ 1.136.106.667</td>
+      <td class="neg">$ 466.167.125</td>
+      <td class="pos">$ 669.939.542</td>
+      <td class="pos">58.97%</td>
+      <td class="pos">$ 49.290.000</td>
+      <td><span class="tag-si">✔</span></td>
+      <td><span class="tag-si">✔</span></td>
+    </tr></tbody>
     </table>
   </div>
 
@@ -1018,5 +1528,6 @@ renderCharts();
 renderClientes();
 calcularEscenarios();
 </script>
-</body>
-</html>
+
+
+</body></html>
