@@ -429,9 +429,9 @@ td:first-child{text-align:left;font-family:var(--sans);font-weight:500;font-size
 </main>
 
 <script>
-
 // ═══════════════════════════════════════════════════════════════
-// DATOS — generados por gc_generar.py el 09/06/2026 21:00
+// ═══════════════════════════════════════════════════════════════
+// DATOS — generados por gc_generar.py el 09/06/2026 21:46
 // Meses activos: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY']
 // ═══════════════════════════════════════════════════════════════
 
@@ -465,11 +465,15 @@ const COP = {"ENE": {"ops": [40, 6, 0, 17, 0, 28, 18, 15, 17, 8, 0], "total": [9
 const MASA = {
   total:    [109889315, 118119083, 126476270, 129197989, 168689207, 0, 0, 0, 0, 0, 0, 0],
   variable: [5139837, 5373562, 7883814, 9567872, 6037460, 0, 0, 0, 0, 0, 0, 0],
+  q_tot:    [17, 0, 0, 112, 0, 0, 0, 0, 0, 0, 0, 0],
+  cats:     {"ENE": [{"n": "Cat.3 25hs", "q": 1, "c": 634859, "col": "#4d9fff"}, {"n": "Cat.3 27.5hs", "q": 0, "c": 0, "col": "#00e5c3"}, {"n": "Cat.3 30hs", "q": 1, "c": 999509, "col": "#a78bfa"}, {"n": "Cat.3 36hs", "q": 0, "c": 0, "col": "#fbbf24"}, {"n": "Fuera de Convenio", "q": 12, "c": 23561855, "col": "#f87171"}, {"n": "Socios", "q": 3, "c": 6073380, "col": "#64748b"}], "FEB": [{"n": "Cat.3 25hs", "q": 0, "c": 0, "col": "#4d9fff"}, {"n": "Cat.3 27.5hs", "q": 0, "c": 0, "col": "#00e5c3"}, {"n": "Cat.3 30hs", "q": 0, "c": 0, "col": "#a78bfa"}, {"n": "Cat.3 36hs", "q": 0, "c": 0, "col": "#fbbf24"}, {"n": "Fuera de Convenio", "q": 0, "c": 0, "col": "#f87171"}, {"n": "Socios", "q": 0, "c": 0, "col": "#64748b"}], "MAR": [{"n": "Cat.3 25hs", "q": 0, "c": 0, "col": "#4d9fff"}, {"n": "Cat.3 27.5hs", "q": 0, "c": 0, "col": "#00e5c3"}, {"n": "Cat.3 30hs", "q": 0, "c": 0, "col": "#a78bfa"}, {"n": "Cat.3 36hs", "q": 0, "c": 0, "col": "#fbbf24"}, {"n": "Fuera de Convenio", "q": 0, "c": 0, "col": "#f87171"}, {"n": "Socios", "q": 0, "c": 0, "col": "#64748b"}], "ABR": [{"n": "Cat.3 25hs", "q": 88, "c": 52022142, "col": "#4d9fff"}, {"n": "Cat.3 27.5hs", "q": 0, "c": 0, "col": "#00e5c3"}, {"n": "Cat.3 30hs", "q": 5, "c": 5439677, "col": "#a78bfa"}, {"n": "Cat.3 36hs", "q": 0, "c": 0, "col": "#fbbf24"}, {"n": "Fuera de Convenio", "q": 16, "c": 30860577, "col": "#f87171"}, {"n": "Socios", "q": 3, "c": 6072831, "col": "#64748b"}], "MAY": [{"n": "Cat.3 25hs", "q": 0, "c": 0, "col": "#4d9fff"}, {"n": "Cat.3 27.5hs", "q": 0, "c": 0, "col": "#00e5c3"}, {"n": "Cat.3 30hs", "q": 0, "c": 0, "col": "#a78bfa"}, {"n": "Cat.3 36hs", "q": 0, "c": 0, "col": "#fbbf24"}, {"n": "Fuera de Convenio", "q": 0, "c": 0, "col": "#f87171"}, {"n": "Socios", "q": 0, "c": 0, "col": "#64748b"}]},
+  mc:       {"ENE": {"q_mc": 117, "costo_mc": 104715664, "q_ing": 22, "costo_ing": 5173650, "desvinc_q": 8, "desvinc_c": 777302, "vacac_q": 18, "vacac_c": 4096414}, "FEB": {"q_mc": 0, "costo_mc": 0, "q_ing": 0, "costo_ing": 0, "desvinc_q": 0, "desvinc_c": 0, "vacac_q": 0, "vacac_c": 0}, "MAR": {"q_mc": 0, "costo_mc": 0, "q_ing": 0, "costo_ing": 0, "desvinc_q": 0, "desvinc_c": 0, "vacac_q": 0, "vacac_c": 0}, "ABR": {"q_mc": 128, "costo_mc": 123130053, "q_ing": 33, "costo_ing": 6067936, "desvinc_q": 7, "desvinc_c": 5531395, "vacac_q": 9, "vacac_c": 2746477}, "MAY": {"q_mc": 0, "costo_mc": 0, "q_ing": 0, "costo_ing": 0, "desvinc_q": 0, "desvinc_c": 0, "vacac_q": 0, "vacac_c": 0}},
 };
 
 // ══════════════════════════════════════════════════════
 // HELPERS
 
+// HELPERS
 // ══════════════════════════════════════════════════════
 let mesF = 'todos';
 let mesCliente = 'ENE';
@@ -683,58 +687,65 @@ function makePie(svgId, legendId, items){
 }
 
 function renderMasa(){
+  const n_m=MESES_ACTIVOS.length;
+  const total_acum=MASA.total.slice(0,n_m).reduce((a,b)=>a+b,0);
+  const idx_may=MESES_ACTIVOS.indexOf('MAY');
+  const may_tot=idx_may>=0?MASA.total[idx_may]:0;
+  const q_may=idx_may>=0?(MASA.q_tot&&MASA.q_tot[idx_may]||0):0;
   const kpis=[
-    {l:'Total Acumulado ENE–MAY',v:fmt(MASA.total.slice(0,5).reduce((a,b)=>a+b,0)),s:'Formulario 931',c:'b'},
-    {l:'Pico MAY (con SAC)',v:fmt(168689207),s:'Mes más caro del año',c:'y'},
-    {l:'JUN (sin SAC)',v:fmt(159391283),s:'',c:'p'},
+    {l:'Total Acumulado',v:fmt(total_acum),s:'Formulario 931 — '+MESES_ACTIVOS[0]+'–'+MESES_ACTIVOS[n_m-1],c:'b'},
+    {l:'Pico MAY (con SAC)',v:fmt(may_tot),s:'Mes más caro del año',c:'y'},
     {l:'SAC incluido MAY',v:fmt(49682167),s:'Aguinaldo',c:'warn'},
-    {l:'Q Personas MAY',v:'175',s:'Pico de nómina',c:'g'},
-    {l:'Rotación observada',v:'ENE→MAR',s:'22 ingresos ENE / 6 FEB / 6 MAR',c:'g'},
+    {l:'Q Personas MAY',v:String(q_may||175),s:'Pico de nómina',c:'g'},
+    {l:'Costo variable MAY',v:fmt(MASA.variable[idx_may>=0?idx_may:4]||0),s:'',c:'p'},
+    {l:'Meses cerrados',v:String(n_m),s:'de 12 del año',c:'g'},
   ];
   document.getElementById('kpi-masa').innerHTML=kpis.map(k=>`
     <div class="kpi ${k.c}"><div class="kpi-lbl">${k.l}</div><div class="kpi-val">${k.v}</div><div class="kpi-sub">${k.s}</div></div>`).join('');
 
+  const CNOMBRES=['Cat.3 25hs','Cat.3 27.5hs','Cat.3 30hs','Cat.3 36hs','Fuera de Convenio','Socios ⚠'];
   let html='';
-  MASA.cats.forEach(cat=>{
-    const isSoc=cat.n.includes('Socios');
+  CNOMBRES.forEach(catN=>{
+    const isSoc=catN.includes('Socios');
+    const cname=catN.replace(' ⚠','');
     html+=`<tr ${isSoc?'style="opacity:.4"':''}>
-      <td>${cat.n}</td>
-      ${[0,1,2,3,4,5].map(i=>`
-        <td>${cat.q[i]>0?cat.q[i]:'—'}</td>
-        <td style="border-right:${i<5?'1px solid var(--bdr)':'none'}">${cat.c[i]>0?fmt(cat.c[i]):'—'}</td>
-      `).join('')}
+      <td>${catN}</td>
+      ${MESES_ACTIVOS.map((mc_key,i)=>{
+        const cats=(MASA.cats&&MASA.cats[mc_key])||[];
+        const cat=Array.isArray(cats)?cats.find(c=>c.n===cname)||{q:0,c:0}:{q:0,c:0};
+        const brd=i<MESES_ACTIVOS.length-1?'border-right:1px solid var(--bdr)':'';
+        return '<td>'+(cat.q>0?cat.q:'—')+'</td><td style="'+brd+'">'+(cat.c>0?fmt(cat.c):'—')+'</td>';
+      }).join('')}
     </tr>`;
   });
   html+=`<tr class="rt"><td>TOTAL NÓMINA</td>
-    ${[0,1,2,3,4,5].map(i=>`
-      <td class="pos">${fmtN(MASA.q_tot[i])}</td>
-      <td style="border-right:${i<5?'1px solid var(--bdr)':'none'}" class="neg">${fmt(MASA.total[i])}</td>
-    `).join('')}
+    ${MESES_ACTIVOS.map((mc_key,i)=>{
+      const brd=i<MESES_ACTIVOS.length-1?'border-right:1px solid var(--bdr)':'';
+      return '<td class="pos">'+fmtN(MASA.q_tot[i]||0)+'</td><td style="'+brd+'" class="neg">'+fmt(MASA.total[i]||0)+'</td>';
+    }).join('')}
   </tr>`;
   document.getElementById('masa-cat-body').innerHTML=html;
 
-  const mcRows=[
-    {l:'Total en nómina',            arr:MASA.q_tot,     num:true},
-    {l:'Mes completo (Q)',            arr:MASA.q_mc,      num:true,cls:'pos'},
-    {l:'Ingresaron después día 15 (Q)',arr:MASA.q_ing,   num:true,cls:'warn'},
-    {l:'Costo mes completo ($)',      arr:MASA.costo_mc,  cls:'neg'},
-    {l:'Costo ingresantes ($)',       arr:MASA.costo_ing, cls:'warn'},
-    {l:'Desvinculaciones (Q)',        arr:MASA.desvinc_q, num:true,cls:'neg'},
-    {l:'Costo desvinculaciones ($)',  arr:MASA.desvinc_c, cls:'neg'},
-    {l:'Vacaciones (Q)',              arr:MASA.vacac_q,   num:true,cls:'warn'},
-    {l:'Costo vacaciones ($)',        arr:MASA.vacac_c,   cls:'warn'},
-    {l:'Incentivos — Q personas',     arr:MASA.incent_q,  num:true,cls:''},
-    {l:'Incentivos — costo total ($)',arr:MASA.incent_c,  cls:'pos'},
+  const mc_labels=[
+    {l:'Total en nómina',             fn:(_,i)=>(MASA.q_tot[i]||0),num:true},
+    {l:'Mes completo (Q)',             fn:mc=>((MASA.mc&&MASA.mc[mc]||{}).q_mc||0),num:true,cls:'pos'},
+    {l:'Ingresaron después día 15 (Q)',fn:mc=>((MASA.mc&&MASA.mc[mc]||{}).q_ing||0),num:true,cls:'warn'},
+    {l:'Costo mes completo ($)',       fn:mc=>((MASA.mc&&MASA.mc[mc]||{}).costo_mc||0),cls:'neg'},
+    {l:'Costo ingresantes ($)',        fn:mc=>((MASA.mc&&MASA.mc[mc]||{}).costo_ing||0),cls:'warn'},
+    {l:'Desvinculaciones (Q)',         fn:mc=>((MASA.mc&&MASA.mc[mc]||{}).desvinc_q||0),num:true,cls:'neg'},
+    {l:'Costo desvinculaciones ($)',   fn:mc=>((MASA.mc&&MASA.mc[mc]||{}).desvinc_c||0),cls:'neg'},
+    {l:'Vacaciones (Q)',               fn:mc=>((MASA.mc&&MASA.mc[mc]||{}).vacac_q||0),num:true,cls:'warn'},
+    {l:'Costo vacaciones ($)',         fn:mc=>((MASA.mc&&MASA.mc[mc]||{}).vacac_c||0),cls:'warn'},
   ];
   let mc='';
-  mcRows.forEach(r=>{
-    mc+=`<tr><td>${r.l}</td>${[0,1,2,3,4,5].map(i=>{
-      const v=r.arr[i];
+  mc_labels.forEach(r=>{
+    mc+='<tr><td>'+r.l+'</td>'+MESES_ACTIVOS.map((mc_key,i)=>{
+      const v=r.fn(mc_key,i);
       if(!v) return '<td class="dim">—</td>';
-      const disp=r.num?`<span class="${r.cls||''}">${v.toLocaleString('es-AR')}</span>`:
-                       `<span class="${r.cls||cc(v)}">${fmt(v)}</span>`;
-      return `<td>${disp}</td>`;
-    }).join('')}</tr>`;
+      const disp=r.num?'<span class="'+(r.cls||'')+'">'+v.toLocaleString('es-AR')+'</span>':
+                       '<span class="'+(r.cls||cc(v))+'">'+fmt(v)+'</span>';
+      return '<td>'+disp+'</td>';
+    }).join('')+'</tr>';
   });
   document.getElementById('masa-mc-body').innerHTML=mc;
 
